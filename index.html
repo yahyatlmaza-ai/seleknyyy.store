@@ -1,0 +1,1198 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seleknyyy Store - متجرك الموثوق</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Cairo', sans-serif;
+        }
+
+        :root {
+            --primary: #6c5ce7;
+            --primary-dark: #5649c0;
+            --secondary: #00d25b;
+            --danger: #fc544b;
+            --warning: #ffa426;
+            --dark: #1e1e2d;
+            --gray: #a2a3b7;
+            --light-gray: #eff2f7;
+            --light: #f9fafc;
+            --white: #ffffff;
+            --whatsapp: #25D366;
+        }
+
+        body {
+            background: var(--light);
+            color: var(--dark);
+        }
+
+        .header {
+            background: var(--white);
+            box-shadow: 0 2px 20px rgba(0,0,0,0.05);
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            width: 100%;
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-decoration: none;
+        }
+
+        .logo span {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            -webkit-text-fill-color: white;
+        }
+
+        .search-bar {
+            flex: 1;
+            max-width: 400px;
+            margin: 0 15px;
+            position: relative;
+        }
+
+        .search-bar input {
+            width: 100%;
+            padding: 10px 35px 10px 15px;
+            border: 1px solid var(--light-gray);
+            border-radius: 30px;
+            font-size: 0.95rem;
+        }
+
+        .search-bar i {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--gray);
+        }
+
+        .nav-icons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .nav-icon {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: var(--dark);
+            cursor: pointer;
+            font-size: 0.8rem;
+            text-decoration: none;
+        }
+
+        .nav-icon i {
+            font-size: 1.3rem;
+        }
+
+        /* زر المساعد الذكي */
+        .ai-button {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+            box-shadow: 0 5px 20px rgba(108, 92, 231, 0.4);
+            z-index: 999;
+            transition: all 0.3s;
+        }
+
+        .ai-button:hover {
+            transform: scale(1.1);
+        }
+
+        /* نافذة المساعد الذكي */
+        .ai-chat {
+            position: fixed;
+            bottom: 90px;
+            left: 20px;
+            width: 350px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            z-index: 1000;
+            display: none;
+            overflow: hidden;
+        }
+
+        .ai-chat.open {
+            display: block;
+        }
+
+        .ai-header {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            padding: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .ai-header i {
+            font-size: 2rem;
+        }
+
+        .ai-header h3 {
+            flex: 1;
+            font-size: 1rem;
+        }
+
+        .close-chat {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.3rem;
+            cursor: pointer;
+        }
+
+        .ai-messages {
+            height: 300px;
+            padding: 15px;
+            overflow-y: auto;
+            background: #f5f5f5;
+        }
+
+        .message {
+            margin-bottom: 15px;
+            display: flex;
+            gap: 10px;
+        }
+
+        .message.bot {
+            flex-direction: row;
+        }
+
+        .message.user {
+            flex-direction: row-reverse;
+        }
+
+        .message-avatar {
+            width: 30px;
+            height: 30px;
+            background: var(--primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 0.9rem;
+        }
+
+        .message-content {
+            background: white;
+            padding: 10px 15px;
+            border-radius: 15px;
+            max-width: 70%;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        .message.user .message-content {
+            background: var(--primary);
+            color: white;
+        }
+
+        .ai-input {
+            display: flex;
+            padding: 10px;
+            background: white;
+            border-top: 1px solid #eee;
+        }
+
+        .ai-input input {
+            flex: 1;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 20px;
+            outline: none;
+        }
+
+        .ai-input button {
+            background: var(--primary);
+            color: white;
+            border: none;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            margin-right: 8px;
+            cursor: pointer;
+        }
+
+        .hero {
+            padding: 40px 0;
+        }
+
+        .hero-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            align-items: center;
+        }
+
+        .hero-content h1 {
+            font-size: 2.5rem;
+            color: var(--dark);
+            margin-bottom: 15px;
+        }
+
+        .hero-content h1 span {
+            color: var(--primary);
+        }
+
+        .hero-content p {
+            font-size: 1rem;
+            color: var(--gray);
+            margin-bottom: 20px;
+        }
+
+        .hero-stats {
+            display: flex;
+            gap: 20px;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .hero-image {
+            background: var(--white);
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+
+        .hero-image i {
+            font-size: 4rem;
+            color: var(--primary);
+        }
+
+        .categories {
+            padding: 40px 0;
+            background: var(--white);
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .section-title h2 {
+            font-size: 1.8rem;
+            color: var(--dark);
+            margin-bottom: 5px;
+        }
+
+        .categories-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 10px;
+        }
+
+        .category-card {
+            background: var(--light);
+            padding: 15px 5px;
+            border-radius: 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .category-card:hover {
+            background: #6c5ce710;
+        }
+
+        .category-card i {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 5px;
+        }
+
+        .category-card span {
+            display: block;
+            font-size: 0.9rem;
+            color: var(--dark);
+        }
+
+        .products-section {
+            padding: 40px 0;
+            background: var(--light);
+        }
+
+        .products-header {
+            max-width: 1200px;
+            margin: 0 auto 20px;
+            padding: 0 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .products-header h2 {
+            font-size: 1.5rem;
+        }
+
+        .view-all {
+            color: var(--primary);
+            cursor: pointer;
+            padding: 5px 15px;
+            border: 1px solid var(--primary);
+            border-radius: 20px;
+            font-size: 0.9rem;
+        }
+
+        .products-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+        }
+
+        .product-card {
+            background: var(--white);
+            border-radius: 10px;
+            overflow: hidden;
+            cursor: pointer;
+            border: 1px solid var(--light-gray);
+        }
+
+        .product-image-container {
+            height: 150px;
+            overflow: hidden;
+        }
+
+        .product-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .product-badge {
+            position: absolute;
+            background: var(--danger);
+            color: white;
+            padding: 3px 8px;
+            border-radius: 15px;
+            font-size: 0.7rem;
+        }
+
+        .product-info {
+            padding: 12px;
+        }
+
+        .product-category {
+            color: var(--gray);
+            font-size: 0.75rem;
+        }
+
+        .product-name {
+            font-size: 1rem;
+            font-weight: 600;
+            margin: 5px 0;
+        }
+
+        .product-price {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin: 5px 0;
+        }
+
+        .order-now-btn {
+            width: 100%;
+            padding: 8px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 0.85rem;
+            cursor: pointer;
+        }
+
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: 0.3s;
+        }
+
+        .modal-overlay.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal {
+            background: var(--white);
+            width: 90%;
+            max-width: 400px;
+            border-radius: 10px;
+            padding: 20px;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .close-modal {
+            background: none;
+            border: none;
+            font-size: 1.3rem;
+            cursor: pointer;
+            color: var(--gray);
+        }
+
+        .product-summary {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+            padding: 10px;
+            background: var(--light);
+            border-radius: 8px;
+        }
+
+        .product-summary-image {
+            width: 50px;
+            height: 50px;
+            border-radius: 5px;
+            object-fit: cover;
+        }
+
+        .form-group {
+            margin-bottom: 10px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 3px;
+            font-size: 0.9rem;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid var(--light-gray);
+            border-radius: 5px;
+            font-size: 0.9rem;
+        }
+
+        .order-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .order-btn {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .order-btn.primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .order-btn.whatsapp {
+            background: #25D366;
+            color: white;
+        }
+
+        .footer {
+            background: var(--dark);
+            color: white;
+            padding: 40px 0 20px;
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 20px;
+        }
+
+        .footer-logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+
+        .footer-description {
+            color: var(--gray);
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        .footer-location {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            color: var(--light-gray);
+            margin: 5px 0;
+            font-size: 0.85rem;
+        }
+
+        .footer-links h4 {
+            margin-bottom: 10px;
+            font-size: 1rem;
+        }
+
+        .footer-links ul {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 5px;
+        }
+
+        .footer-links a {
+            color: var(--gray);
+            text-decoration: none;
+            font-size: 0.85rem;
+        }
+
+        .footer-bottom {
+            max-width: 1200px;
+            margin: 20px auto 0;
+            padding: 15px 15px 0;
+            border-top: 1px solid #404058;
+            text-align: center;
+            color: var(--gray);
+            font-size: 0.8rem;
+        }
+
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .search-bar {
+                width: 100%;
+                max-width: none;
+                margin: 5px 0;
+            }
+            
+            .hero-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .hero-stats {
+                justify-content: center;
+            }
+            
+            .categories-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            
+            .products-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .footer-container {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            
+            .footer-location {
+                justify-content: center;
+            }
+            
+            .ai-chat {
+                width: 300px;
+                left: 10px;
+                bottom: 80px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .categories-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- زر المساعد الذكي -->
+    <div class="ai-button" onclick="toggleAIChat()">
+        🤖
+    </div>
+
+    <!-- نافذة المساعد الذكي -->
+    <div class="ai-chat" id="aiChat">
+        <div class="ai-header">
+            <i>🤖</i>
+            <h3>مساعد Seleknyyy الذكي</h3>
+            <button class="close-chat" onclick="toggleAIChat()">✕</button>
+        </div>
+        <div class="ai-messages" id="aiMessages">
+            <div class="message bot">
+                <div class="message-avatar">🤖</div>
+                <div class="message-content">
+                    <div>مرحباً! أنا مساعد Seleknyyy الذكي</div>
+                    <div style="font-size: 0.7rem; opacity: 0.7;">الآن</div>
+                </div>
+            </div>
+        </div>
+        <div class="ai-input">
+            <input type="text" id="aiInput" placeholder="اكتب سؤالك..." onkeypress="if(event.key==='Enter') sendAIMessage()">
+            <button onclick="sendAIMessage()">➤</button>
+        </div>
+    </div>
+
+    <header class="header">
+        <div class="header-container">
+            <div class="logo">
+                Seleknyyy <span>Store</span>
+            </div>
+            
+            <div class="search-bar">
+                <i>🔍</i>
+                <input type="text" placeholder="ابحث عن منتج..." id="searchInput">
+            </div>
+            
+            <div class="nav-icons">
+                <div class="nav-icon" onclick="showContactInfo()">
+                    <i>📞</i>
+                    <span>اتصل</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="hero-container">
+            <div class="hero-content">
+                <h1>تسوق <span>بأمان</span> و <span>ثقة</span></h1>
+                <p>أفضل المنتجات الأصلية مع خدمة توصيل سريعة وآمنة.</p>
+                <div class="hero-stats">
+                    <div class="stat-item">
+                        <div class="stat-number" id="totalProducts">8</div>
+                        <div class="stat-label">منتج</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number" id="totalCustomers">0</div>
+                        <div class="stat-label">عميل</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">4.9</div>
+                        <div class="stat-label">تقييم</div>
+                    </div>
+                </div>
+            </div>
+            <div class="hero-image">
+                <i>🛍️</i>
+                <h3>Seleknyyy Store</h3>
+                <p style="color: var(--gray);">تسوق بثقة</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="categories">
+        <div class="section-title">
+            <h2>تصفح الأقسام</h2>
+            <p>اختر من بين مئات المنتجات</p>
+        </div>
+        <div class="categories-grid">
+            <div class="category-card" onclick="filterByCategory('ملابس')">
+                <i>👕</i>
+                <span>ملابس</span>
+            </div>
+            <div class="category-card" onclick="filterByCategory('أحذية')">
+                <i>👟</i>
+                <span>أحذية</span>
+            </div>
+            <div class="category-card" onclick="filterByCategory('إلكترونيات')">
+                <i>📱</i>
+                <span>إلكترونيات</span>
+            </div>
+            <div class="category-card" onclick="filterByCategory('حقائب')">
+                <i>👜</i>
+                <span>حقائب</span>
+            </div>
+            <div class="category-card" onclick="filterByCategory('إكسسوارات')">
+                <i>⌚</i>
+                <span>إكسسوارات</span>
+            </div>
+            <div class="category-card" onclick="filterByCategory('تجميل')">
+                <i>💄</i>
+                <span>تجميل</span>
+            </div>
+        </div>
+    </section>
+
+    <section class="products-section">
+        <div class="products-header">
+            <h2>🔥 منتجات مميزة</h2>
+            <div class="view-all" onclick="resetFilters()">
+                عرض الكل
+            </div>
+        </div>
+        <div class="products-grid" id="productsGrid"></div>
+    </section>
+
+    <div class="modal-overlay" id="orderModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3>أكمل طلبك</h3>
+                <button class="close-modal" onclick="closeModal()">✕</button>
+            </div>
+            
+            <div id="productSummary" class="product-summary"></div>
+
+            <div class="form-group">
+                <label>الاسم الكامل</label>
+                <input type="text" id="customerName" placeholder="أدخل اسمك">
+            </div>
+
+            <div class="form-group">
+                <label>رقم الهاتف</label>
+                <input type="tel" id="customerPhone" placeholder="05XX XX XX XX">
+            </div>
+
+            <div class="form-group">
+                <label>العنوان</label>
+                <textarea id="customerAddress" placeholder="العنوان بالتفصيل" rows="2"></textarea>
+            </div>
+
+            <div class="order-actions">
+                <button class="order-btn primary" onclick="submitOrder('direct')">
+                    تأكيد
+                </button>
+                <button class="order-btn whatsapp" onclick="submitOrder('whatsapp')">
+                    واتساب
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-container">
+            <div>
+                <div class="footer-logo">Seleknyyy Store</div>
+                <p class="footer-description">أول متجر إلكتروني يقدم تجربة تسوق فاخرة مع منتجات أصلية 100%.</p>
+                <div class="footer-location">
+                    <i>📞</i>
+                    <span>0794 15 75 08</span>
+                </div>
+                <div class="footer-location">
+                    <i>✉️</i>
+                    <span>yahyatlmaza@gmail.com</span>
+                </div>
+            </div>
+            <div class="footer-links">
+                <h4>روابط سريعة</h4>
+                <ul>
+                    <li><a href="#" onclick="scrollToTop(); return false;">الرئيسية</a></li>
+                    <li><a href="#" onclick="resetFilters(); return false;">منتجاتنا</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <h4>الدعم</h4>
+                <ul>
+                    <li><a href="#" onclick="showShippingInfo(); return false;">الشحن</a></li>
+                    <li><a href="#" onclick="showPaymentInfo(); return false;">الدفع</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <h4>ساعات العمل</h4>
+                <ul>
+                    <li>السبت - الخميس: 9ص - 9م</li>
+                    <li>الجمعة: مغلق</li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            © 2026 Seleknyyy Store
+        </div>
+    </footer>
+
+    <script>
+        // ============ بوت الذكاء الاصطناعي المتطور (مثل DeepSeek) ============
+        const aiBot = {
+            // قاعدة المعرفة
+            knowledge: {
+                greetings: ['مرحبا', 'السلام', 'اهلا', 'hi', 'hello'],
+                products: ['منتج', 'منتجات', 'متوفر', 'عندك'],
+                price: ['سعر', 'كم', 'بكم', 'ثمن'],
+                shipping: ['شحن', 'توصيل', 'مدة', 'وقت'],
+                payment: ['دفع', 'فيزا', 'ذهبية', 'كاش', 'نقدا'],
+                contact: ['اتصال', 'رقم', 'هاتف', 'واتساب', 'تواصل'],
+                working: ['ساعات العمل', 'دوام', 'مفتوح', 'مغلق'],
+                location: ['عنوان', 'مكان', 'أين', 'موقع']
+            },
+
+            // توليد رد ذكي
+            generateResponse(message) {
+                const msg = message.toLowerCase();
+                
+                // تحليل المشاعر
+                if (msg.includes('شكرا') || msg.includes('ممتاز') || msg.includes('رائع')) {
+                    return "العفو! ❤️ سعيد بخدمتك. هل تريد مساعدة في شيء آخر؟";
+                }
+                
+                if (msg.includes('سيء') || msg.includes('غالي') || msg.includes('مشكلة')) {
+                    return "نأسف لأي إزعاج 🙏 أخبرني بالمشكلة وسأحاول مساعدتك";
+                }
+
+                // ردود ذكية حسب الكلمات المفتاحية
+                if (this.knowledge.greetings.some(word => msg.includes(word))) {
+                    return this.getRandomResponse('greeting');
+                }
+                
+                if (this.knowledge.products.some(word => msg.includes(word))) {
+                    return this.getRandomResponse('products');
+                }
+                
+                if (this.knowledge.price.some(word => msg.includes(word))) {
+                    return this.getRandomResponse('price');
+                }
+                
+                if (this.knowledge.shipping.some(word => msg.includes(word))) {
+                    return this.getRandomResponse('shipping');
+                }
+                
+                if (this.knowledge.payment.some(word => msg.includes(word))) {
+                    return this.getRandomResponse('payment');
+                }
+                
+                if (this.knowledge.contact.some(word => msg.includes(word))) {
+                    return this.getRandomResponse('contact');
+                }
+                
+                if (this.knowledge.working.some(word => msg.includes(word))) {
+                    return this.getRandomResponse('working');
+                }
+                
+                if (this.knowledge.location.some(word => msg.includes(word))) {
+                    return this.getRandomResponse('location');
+                }
+
+                // رد افتراضي ذكي
+                return this.getRandomResponse('default');
+            },
+
+            // ردود متنوعة
+            responses: {
+                greeting: [
+                    "مرحباً بك في Seleknyyy Store! 👋 كيف يمكنني مساعدتك؟",
+                    "أهلاً وسهلاً! 🤗 ما الذي تبحث عنه اليوم؟",
+                    "مرحباً! 🌟 أنا هنا لمساعدتك في أي استفسار"
+                ],
+                products: [
+                    "لدينا 8 منتجات مميزة في مختلف الأقسام: ملابس، أحذية، إلكترونيات، حقائب، إكسسوارات، وتجميل 🛍️",
+                    "يمكنك تصفح المنتجات في الصفحة الرئيسية، جميعها بجودة عالية وأسعار ممتازة ✨",
+                    "نوفر مجموعة متنوعة من المنتجات الأصلية. هل تبحث عن شيء معين؟"
+                ],
+                price: [
+                    "الأسعار تبدأ من 1800 د.ج وتصل إلى 15000 د.ج. تختلف حسب المنتج 💰",
+                    "جميع الأسعار واضحة بجانب كل منتج. هل تريد الاستفسار عن منتج محدد؟",
+                    "نقدم أفضل الأسعار في السوق مع ضمان الجودة 🏷️"
+                ],
+                shipping: [
+                    "مدة التوصيل من 2 إلى 4 أيام عمل حسب منطقتك 📦",
+                    "الشحن متوفر لجميع الولايات بتكلفة 500 د.ج (مجاني للطلبات فوق 10000 د.ج) 🚚",
+                    "نوصلك أينما كنت في الجزائر خلال 48 ساعة إن شاء الله ⏱️"
+                ],
+                payment: [
+                    "نقبل الدفع عند الاستلام، البطاقة الذهبية، وفيزا 💳",
+                    "طرق دفع متعددة وآمنة: كاش، EDAHABIA، CIB 🔒",
+                    "يمكنك الدفع بأي طريقة تناسبك، جميعها متاحة ✅"
+                ],
+                contact: [
+                    "للتواصل: 0794 15 75 08 (واتساب متاح) 📱",
+                    "يمكنك مراسلتنا على واتساب أو الاتصال بنا مباشرة على الرقم 0794 15 75 08",
+                    "نحن هنا لخدمتك على الرقم 0794 15 75 08 أو عبر البريد yahyatlmaza@gmail.com 📧"
+                ],
+                working: [
+                    "ساعات العمل: السبت - الخميس من 9 صباحاً إلى 9 مساءً 🕘",
+                    "الجمعة عطلة أسبوعية، ونعود للعمل يوم السبت. نعتذر عن أي إزعاج",
+                    "نستقبل طلباتكم 6 أيام في الأسبوع، ما عدا الجمعة"
+                ],
+                location: [
+                    "متجرنا متوفر أونلاين فقط، ولكن التوصيل لكل الجزائر 🌍",
+                    "يمكنك الطلب من أي مكان في الجزائر، ونوصلك للمنزل 🏠",
+                    "نحن متجر إلكتروني، لكن منتجاتنا متوفرة في كل مكان عبر التوصيل السريع"
+                ],
+                default: [
+                    "شكراً لسؤالك! 🤔 هل يمكنك التوضيح أكثر؟ أنا هنا لمساعدتك",
+                    "لم أفهم سؤالك تماماً، لكن يمكنك اختيار من الأقسام أعلاه أو سؤال عن: الأسعار، الشحن، طرق الدفع 📌",
+                    "أنا المساعد الذكي للمتجر. يمكنني مساعدتك في: استعلام عن منتجات، معرفة الأسعار، معلومات الشحن، طرق الدفع، التواصل معنا"
+                ]
+            },
+
+            getRandomResponse(type) {
+                const responses = this.responses[type] || this.responses.default;
+                return responses[Math.floor(Math.random() * responses.length)];
+            },
+
+            // إرسال رسالة واتساب
+            sendWhatsApp(phone, message) {
+                const cleanPhone = phone.replace(/\s+/g, '');
+                const encoded = encodeURIComponent(message);
+                window.open(`https://wa.me/${cleanPhone}?text=${encoded}`, '_blank');
+            }
+        };
+
+        // ============ دوال المساعد الذكي ============
+        function toggleAIChat() {
+            document.getElementById('aiChat').classList.toggle('open');
+        }
+
+        function sendAIMessage() {
+            const input = document.getElementById('aiInput');
+            const message = input.value.trim();
+            if (!message) return;
+
+            // إضافة رسالة المستخدم
+            addMessage(message, 'user');
+            input.value = '';
+
+            // تفكير البوت
+            setTimeout(() => {
+                const response = aiBot.generateResponse(message);
+                addMessage(response, 'bot');
+            }, 1000);
+        }
+
+        function addMessage(text, sender) {
+            const messages = document.getElementById('aiMessages');
+            const msgDiv = document.createElement('div');
+            msgDiv.className = `message ${sender}`;
+            
+            const time = new Date().toLocaleTimeString('ar-DZ', { hour: '2-digit', minute: '2-digit' });
+            
+            if (sender === 'bot') {
+                msgDiv.innerHTML = `
+                    <div class="message-avatar">🤖</div>
+                    <div class="message-content">
+                        <div>${text}</div>
+                        <div style="font-size: 0.7rem; opacity: 0.7;">${time}</div>
+                    </div>
+                `;
+            } else {
+                msgDiv.innerHTML = `
+                    <div class="message-content">
+                        <div>${text}</div>
+                        <div style="font-size: 0.7rem; opacity: 0.7;">${time}</div>
+                    </div>
+                    <div class="message-avatar">👤</div>
+                `;
+            }
+            
+            messages.appendChild(msgDiv);
+            messages.scrollTop = messages.scrollHeight;
+        }
+
+        // ============ المنتجات والطلبات ============
+        const defaultProducts = [
+            { id: 1, name: 'تيشيرت قطني', price: 2500, category: 'ملابس', image: 'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=400', stock: 15 },
+            { id: 2, name: 'حذاء رياضي', price: 8500, category: 'أحذية', image: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400', stock: 8 },
+            { id: 3, name: 'ساعة ذكية', price: 15000, category: 'إلكترونيات', image: 'https://images.unsplash.com/photo-1579586337278-3befd40fd17a?w=400', stock: 5 },
+            { id: 4, name: 'حقيبة جلدية', price: 12000, category: 'حقائب', image: 'https://images.unsplash.com/photo-1584917865442-de89df76afd3?w=400', stock: 10 },
+            { id: 5, name: 'نظارة شمسية', price: 4500, category: 'إكسسوارات', image: 'https://images.unsplash.com/photo-1572635196237-14b3f281503f?w=400', stock: 12 },
+            { id: 6, name: 'سماعة لاسلكية', price: 6500, category: 'إلكترونيات', image: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400', stock: 20 },
+            { id: 7, name: 'كريم ترطيب', price: 1800, category: 'تجميل', image: 'https://images.unsplash.com/photo-1570194065650-d99fb4ee0c7a?w=400', stock: 25 },
+            { id: 8, name: 'محفظة رجالية', price: 3200, category: 'إكسسوارات', image: 'https://images.unsplash.com/photo-1627123424574-724758594e93?w=400', stock: 10 }
+        ];
+
+        let products = JSON.parse(localStorage.getItem('products')) || defaultProducts;
+        let currentProduct = null;
+
+        if (!localStorage.getItem('products')) {
+            localStorage.setItem('products', JSON.stringify(defaultProducts));
+        }
+
+        function displayProducts(filteredProducts = products) {
+            const grid = document.getElementById('productsGrid');
+            grid.innerHTML = filteredProducts.map(product => `
+                <div class="product-card" onclick="openOrderModal(${product.id})">
+                    <div class="product-image-container">
+                        <img src="${product.image}" alt="${product.name}" class="product-image">
+                    </div>
+                    <div class="product-info">
+                        <div class="product-category">${product.category}</div>
+                        <div class="product-name">${product.name}</div>
+                        <div class="product-price">${product.price} د.ج</div>
+                        <button class="order-now-btn" onclick="event.stopPropagation(); openOrderModal(${product.id})">
+                            اطلب الآن
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+            document.getElementById('totalProducts').textContent = filteredProducts.length;
+        }
+
+        function openOrderModal(productId) {
+            currentProduct = products.find(p => p.id === productId);
+            document.getElementById('productSummary').innerHTML = `
+                <img src="${currentProduct.image}" class="product-summary-image">
+                <div>
+                    <div><strong>${currentProduct.name}</strong></div>
+                    <div style="color: var(--primary);">${currentProduct.price} د.ج</div>
+                </div>
+            `;
+            document.getElementById('orderModal').classList.add('show');
+        }
+
+        function closeModal() {
+            document.getElementById('orderModal').classList.remove('show');
+            document.getElementById('customerName').value = '';
+            document.getElementById('customerPhone').value = '';
+            document.getElementById('customerAddress').value = '';
+        }
+
+        function submitOrder(method) {
+            const name = document.getElementById('customerName').value;
+            const phone = document.getElementById('customerPhone').value;
+            const address = document.getElementById('customerAddress').value;
+
+            if (!name || !phone || !address) {
+                alert('الرجاء إكمال جميع الحقول');
+                return;
+            }
+
+            // حفظ الطلب في localStorage
+            const orders = JSON.parse(localStorage.getItem('orders')) || [];
+            const newOrder = {
+                id: orders.length + 1,
+                customerName: name,
+                customerPhone: phone,
+                customerAddress: address,
+                product: currentProduct,
+                paymentMethod: method,
+                status: 'pending',
+                date: new Date().toLocaleDateString('ar-DZ'),
+                time: new Date().toLocaleTimeString('ar-DZ')
+            };
+            
+            orders.push(newOrder);
+            localStorage.setItem('orders', JSON.stringify(orders));
+            
+            // إشعار للمتجر (يظهر في لوحة التحكم)
+            localStorage.setItem('lastOrder', JSON.stringify(newOrder));
+            
+            alert(`✅ تم إرسال طلبك بنجاح!\nرقم الطلب: #${newOrder.id}`);
+
+            // إرسال عبر واتساب إذا اختار العميل
+            if (method === 'whatsapp') {
+                const waMessage = `🛍️ طلب جديد من ${name}\n📋 رقم الطلب: #${newOrder.id}\n🛒 المنتج: ${currentProduct.name}\n💰 السعر: ${currentProduct.price} د.ج\n📍 العنوان: ${address}`;
+                aiBot.sendWhatsApp(phone, waMessage);
+            }
+            
+            // إرسال إشعار لصاحب المتجر
+            const ownerMessage = `🛑 طلب جديد!\n📋 #${newOrder.id}\n👤 ${name}\n📞 ${phone}\n🛒 ${currentProduct.name}\n💰 ${currentProduct.price} د.ج`;
+            aiBot.sendWhatsApp('0794157508', ownerMessage);
+            
+            closeModal();
+        }
+
+        function filterByCategory(category) {
+            displayProducts(products.filter(p => p.category === category));
+        }
+
+        function resetFilters() {
+            displayProducts(products);
+        }
+
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function showShippingInfo() {
+            alert('🚚 مدة التوصيل: 2-4 أيام\n💰 التكلفة: 500 د.ج (مجاني للطلبات فوق 10000 د.ج)');
+        }
+
+        function showPaymentInfo() {
+            alert('💳 الدفع عند الاستلام\n💳 البطاقة الذهبية\n💳 فيزا');
+        }
+
+        function showContactInfo() {
+            alert('📞 0794 15 75 08\n✉️ yahyatlmaza@gmail.com');
+        }
+
+        // تحديث عدد العملاء
+        function updateCustomerCount() {
+            const orders = JSON.parse(localStorage.getItem('orders')) || [];
+            const unique = new Set(orders.map(o => o.customerPhone)).size;
+            document.getElementById('totalCustomers').textContent = unique || 0;
+        }
+
+        displayProducts();
+        updateCustomerCount();
+
+        // تحديث كل 10 ثواني
+        setInterval(() => {
+            products = JSON.parse(localStorage.getItem('products')) || defaultProducts;
+            displayProducts(products);
+            updateCustomerCount();
+        }, 10000);
+    </script>
+</body>
+</html>
